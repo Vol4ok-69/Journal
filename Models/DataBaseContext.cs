@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace JournalApi.Models;
+﻿namespace JournalApi.Models;
 
 public partial class DataBaseContext : DbContext
 {

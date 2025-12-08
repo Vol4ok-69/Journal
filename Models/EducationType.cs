@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace JournalApi.Models;
+﻿namespace JournalApi.Models;
 
 public partial class EducationType
 {
