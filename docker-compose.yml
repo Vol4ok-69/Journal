@@ -13,7 +13,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U dev_user -d journal_db" ]
+      test: [ "CMD-SHELL", "pg_isready -U admin69 -d journal_db" ]
       interval: 5s
       timeout: 5s
       retries: 5
