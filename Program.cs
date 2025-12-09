@@ -1,15 +1,16 @@
+// docker-compose down                                                             
+// docker-compose up -d
+// dotnet run
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 
-// Add DbContext with PostgreSQL
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
-var jwtSecretKey = builder.Configuration["Jwt:SecretKey"]!;
+var jwtSecretKey = builder.Configuration["Jwt:Key"]!;
 var jwtTokenExpirationHours = int.Parse(builder.Configuration["Jwt:TokenExpirationHours"]!);
 
 builder.Services.AddAuthentication(options =>
@@ -39,11 +40,11 @@ using (var scope = app.Services.CreateScope())
     try
     {
         await context.Database.MigrateAsync();
-        Console.WriteLine("Миграции применены");
+        Console.WriteLine("Migrations applied");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Ошибка миграций: {ex.Message}");
+        Console.WriteLine($"Migration error: {ex.Message}");
     }
 }
 
