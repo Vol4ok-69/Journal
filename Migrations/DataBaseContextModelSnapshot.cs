@@ -17,7 +17,7 @@ namespace JournalApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -30,7 +30,7 @@ namespace JournalApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -100,6 +100,26 @@ namespace JournalApi.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("JournalApi.Models.EmployeePost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Post")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("Post");
+
+                    b.HasKey("Id")
+                        .HasName("Posts_pkey");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("JournalApi.Models.Grade", b =>
                 {
                     b.Property<int>("Id")
@@ -108,7 +128,7 @@ namespace JournalApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Grade1")
+                    b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)")
@@ -200,7 +220,7 @@ namespace JournalApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
@@ -209,26 +229,6 @@ namespace JournalApi.Migrations
                         .HasName("LessonTypes_pkey");
 
                     b.ToTable("LessonTypes");
-                });
-
-            modelBuilder.Entity("JournalApi.Models.Post", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Post1")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("Post");
-
-                    b.HasKey("Id")
-                        .HasName("Posts_pkey");
-
-                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("JournalApi.Models.Speciality", b =>
@@ -243,7 +243,7 @@ namespace JournalApi.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -404,7 +404,7 @@ namespace JournalApi.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -465,7 +465,7 @@ namespace JournalApi.Migrations
 
             modelBuilder.Entity("JournalApi.Models.Employee", b =>
                 {
-                    b.HasOne("JournalApi.Models.Post", "Post")
+                    b.HasOne("JournalApi.Models.EmployeePost", "Post")
                         .WithMany("Employees")
                         .HasForeignKey("PostId")
                         .IsRequired()
@@ -648,6 +648,11 @@ namespace JournalApi.Migrations
                     b.Navigation("SubjectEmployees");
                 });
 
+            modelBuilder.Entity("JournalApi.Models.EmployeePost", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
             modelBuilder.Entity("JournalApi.Models.Grade", b =>
                 {
                     b.Navigation("StudentGrades");
@@ -668,11 +673,6 @@ namespace JournalApi.Migrations
             modelBuilder.Entity("JournalApi.Models.LessonType", b =>
                 {
                     b.Navigation("Lessons");
-                });
-
-            modelBuilder.Entity("JournalApi.Models.Post", b =>
-                {
-                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("JournalApi.Models.Speciality", b =>

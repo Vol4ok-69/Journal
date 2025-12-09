@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace JournalApi.Models;
 
-public partial class Post
+public partial class EmployeePost
 {
     public int Id { get; set; }
 
-    public string Post1 { get; set; } = null!;
+    public string Post { get; set; } = null!;
 
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 }

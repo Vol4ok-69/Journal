@@ -23,7 +23,7 @@ public partial class DataBaseContext : DbContext
 
     public virtual DbSet<LessonType> LessonTypes { get; set; }
 
-    public virtual DbSet<Post> Posts { get; set; }
+    public virtual DbSet<EmployeePost> Posts { get; set; }
 
     public virtual DbSet<Speciality> Specialities { get; set; }
 
@@ -50,7 +50,7 @@ public partial class DataBaseContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("EducationTypes_pkey");
 
-            entity.Property(e => e.Type).HasMaxLength(50);
+            entity.Property(e => e.Value).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Employee>(entity =>
@@ -78,7 +78,7 @@ public partial class DataBaseContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("Grades_pkey");
 
-            entity.Property(e => e.Grade1)
+            entity.Property(e => e.Value)
                 .HasMaxLength(10)
                 .HasColumnName("Grade");
         });
@@ -131,14 +131,14 @@ public partial class DataBaseContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("LessonTypes_pkey");
 
-            entity.Property(e => e.Type).HasMaxLength(30);
+            entity.Property(e => e.Value).HasMaxLength(30);
         });
 
-        modelBuilder.Entity<Post>(entity =>
+        modelBuilder.Entity<EmployeePost>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Posts_pkey");
 
-            entity.Property(e => e.Post1)
+            entity.Property(e => e.Post)
                 .HasMaxLength(50)
                 .HasColumnName("Post");
         });
@@ -148,7 +148,7 @@ public partial class DataBaseContext : DbContext
             entity.HasKey(e => e.Id).HasName("Specialities_pkey");
 
             entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Value).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Student>(entity =>
@@ -229,7 +229,7 @@ public partial class DataBaseContext : DbContext
             entity.HasKey(e => e.Id).HasName("Subjects_pkey");
 
             entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Value).HasMaxLength(100);
         });
 
         modelBuilder.Entity<SubjectEmployee>(entity =>

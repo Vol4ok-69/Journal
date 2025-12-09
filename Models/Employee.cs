@@ -29,7 +29,7 @@ public partial class Employee
 
     public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
 
-    public virtual Post Post { get; set; } = null!;
+    public virtual EmployeePost Post { get; set; } = null!;
 
     public virtual ICollection<SubjectEmployee> SubjectEmployees { get; set; } = new List<SubjectEmployee>();
 }
