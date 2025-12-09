@@ -9,5 +9,5 @@ public partial class Grade
 
     public string Value { get; set; } = null!;
 
-    public virtual ICollection<StudentGrade> StudentGrades { get; set; } = new List<StudentGrade>();
+    public virtual ICollection<StudentGrade> StudentGrades { get; set; } = [];
 }
