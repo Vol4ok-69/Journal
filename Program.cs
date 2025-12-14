@@ -1,10 +1,3 @@
-/*
-docker-compose down                                                             
-docker-compose up -d
-dotnet run 
-*/
-using Microsoft.OpenApi.Models;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -55,7 +48,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 
-
     options.Events = new JwtBearerEvents
     {
         OnAuthenticationFailed = context =>
@@ -65,7 +57,6 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-
 
 builder.Services.AddAuthorization(options =>
 {
@@ -111,7 +102,7 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine($"Error applying migrations: {ex.Message}");
         Console.WriteLine($"Stack Trace: {ex.StackTrace}");
-        //throw;
+        throw;
     }
 }
 

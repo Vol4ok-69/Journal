@@ -32,11 +32,10 @@
         <Using Include="System.Collections.Generic" />
         <Using Include="System.Text" />
         <Using Include="Microsoft.OpenApi" />
-        
+        <Using Include="Microsoft.OpenApi.Models" />
       </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers/" />
-    <Folder Include="Interfaces/" />
     <Folder Include="Services/" />
   </ItemGroup>
 </Project>

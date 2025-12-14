@@ -23,6 +23,8 @@ public partial class DataBaseContext : DbContext
 
     public virtual DbSet<LessonType> LessonTypes { get; set; }
 
+    public virtual DbSet<Log> Logs { get; set; }
+
     public virtual DbSet<EmployeePost> Posts { get; set; }
 
     public virtual DbSet<Speciality> Specialities { get; set; }
