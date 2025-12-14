@@ -1,4 +1,7 @@
-﻿namespace JournalApi.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace JournalApi.Models;
 
 public partial class EducationType
 {

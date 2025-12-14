@@ -23,6 +23,8 @@ public partial class Student
 
     public string? Phone { get; set; }
 
+    public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+
     public virtual Group Group { get; set; } = null!;
 
     public virtual ICollection<StudentGrade> StudentGrades { get; set; } = new List<StudentGrade>();

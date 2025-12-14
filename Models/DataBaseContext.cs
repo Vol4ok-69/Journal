@@ -1,4 +1,8 @@
-﻿namespace JournalApi.Models;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace JournalApi.Models;
 
 public partial class DataBaseContext : DbContext
 {
@@ -11,9 +15,13 @@ public partial class DataBaseContext : DbContext
     {
     }
 
+    public virtual DbSet<Attendance> Attendances { get; set; }
+
     public virtual DbSet<EducationType> EducationTypes { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
+
+    public virtual DbSet<EmployeePost> EmployeePosts { get; set; }
 
     public virtual DbSet<Grade> Grades { get; set; }
 
@@ -24,8 +32,6 @@ public partial class DataBaseContext : DbContext
     public virtual DbSet<LessonType> LessonTypes { get; set; }
 
     public virtual DbSet<Log> Logs { get; set; }
-
-    public virtual DbSet<EmployeePost> Posts { get; set; }
 
     public virtual DbSet<Speciality> Specialities { get; set; }
 
@@ -44,10 +50,21 @@ public partial class DataBaseContext : DbContext
     public virtual DbSet<SubjectSpecialty> SubjectSpecialties { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(WebApplication.CreateBuilder().Configuration.GetConnectionString("Default"));
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=journal_db;Username=admin69;Password=admin69;Include Error Detail=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Attendance>(entity =>
+        {
+            entity.HasIndex(e => e.LessonId, "IX_Attendances_LessonId");
+
+            entity.HasIndex(e => e.StudentId, "IX_Attendances_StudentId");
+
+            entity.HasOne(d => d.Lesson).WithMany(p => p.Attendances).HasForeignKey(d => d.LessonId);
+
+            entity.HasOne(d => d.Student).WithMany(p => p.Attendances).HasForeignKey(d => d.StudentId);
+        });
+
         modelBuilder.Entity<EducationType>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("EducationTypes_pkey");
@@ -63,6 +80,8 @@ public partial class DataBaseContext : DbContext
 
             entity.HasIndex(e => e.Phone, "Employees_Phone_key").IsUnique();
 
+            entity.HasIndex(e => e.PostId, "IX_Employees_PostId");
+
             entity.Property(e => e.Login).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(256);
@@ -76,11 +95,18 @@ public partial class DataBaseContext : DbContext
                 .HasConstraintName("Employees_PostId_fkey");
         });
 
+        modelBuilder.Entity<EmployeePost>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Posts_pkey");
+
+            entity.Property(e => e.Post).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Grade>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Grades_pkey");
 
-            entity.Property(e => e.Value)
+            entity.Property(e => e.Grade1)
                 .HasMaxLength(10)
                 .HasColumnName("Grade");
         });
@@ -88,6 +114,10 @@ public partial class DataBaseContext : DbContext
         modelBuilder.Entity<Group>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Groups_pkey");
+
+            entity.HasIndex(e => e.CuratorId, "IX_Groups_CuratorId");
+
+            entity.HasIndex(e => e.SpecialityId, "IX_Groups_SpecialityId");
 
             entity.Property(e => e.Code).HasMaxLength(20);
 
@@ -105,6 +135,14 @@ public partial class DataBaseContext : DbContext
         modelBuilder.Entity<Lesson>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Lessons_pkey");
+
+            entity.HasIndex(e => e.GroupId, "IX_Lessons_GroupId");
+
+            entity.HasIndex(e => e.LessonTypeId, "IX_Lessons_LessonTypeId");
+
+            entity.HasIndex(e => e.SubjectId, "IX_Lessons_SubjectId");
+
+            entity.HasIndex(e => e.TeacherId, "IX_Lessons_TeacherId");
 
             entity.Property(e => e.Date).HasColumnType("timestamp without time zone");
 
@@ -136,15 +174,6 @@ public partial class DataBaseContext : DbContext
             entity.Property(e => e.Value).HasMaxLength(30);
         });
 
-        modelBuilder.Entity<EmployeePost>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("Posts_pkey");
-
-            entity.Property(e => e.Post)
-                .HasMaxLength(50)
-                .HasColumnName("Post");
-        });
-
         modelBuilder.Entity<Speciality>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Specialities_pkey");
@@ -156,6 +185,8 @@ public partial class DataBaseContext : DbContext
         modelBuilder.Entity<Student>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Students_pkey");
+
+            entity.HasIndex(e => e.GroupId, "IX_Students_GroupId");
 
             entity.HasIndex(e => e.Login, "Students_Login_key").IsUnique();
 
@@ -177,6 +208,12 @@ public partial class DataBaseContext : DbContext
         modelBuilder.Entity<StudentGrade>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("StudentGrades_pkey");
+
+            entity.HasIndex(e => e.GradeId, "IX_StudentGrades_GradeId");
+
+            entity.HasIndex(e => e.LessonId, "IX_StudentGrades_LessonId");
+
+            entity.HasIndex(e => e.StudentId, "IX_StudentGrades_StudentId");
 
             entity.Property(e => e.Date).HasColumnType("timestamp without time zone");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -201,6 +238,8 @@ public partial class DataBaseContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("StudyDurations_pkey");
 
+            entity.HasIndex(e => e.EducationTypeId, "IX_StudyDurations_EducationTypeId");
+
             entity.Property(e => e.Period).HasMaxLength(50);
 
             entity.HasOne(d => d.EducationType).WithMany(p => p.StudyDurations)
@@ -214,6 +253,10 @@ public partial class DataBaseContext : DbContext
             entity.HasKey(e => e.Id).HasName("StudyDurationSpeciality_pkey");
 
             entity.ToTable("StudyDurationSpeciality");
+
+            entity.HasIndex(e => e.SpecialityId, "IX_StudyDurationSpeciality_SpecialityId");
+
+            entity.HasIndex(e => e.StudyDurationId, "IX_StudyDurationSpeciality_StudyDurationId");
 
             entity.HasOne(d => d.Speciality).WithMany(p => p.StudyDurationSpecialities)
                 .HasForeignKey(d => d.SpecialityId)
@@ -240,6 +283,10 @@ public partial class DataBaseContext : DbContext
 
             entity.ToTable("SubjectEmployee");
 
+            entity.HasIndex(e => e.PossibleEmployeeId, "IX_SubjectEmployee_PossibleEmployeeId");
+
+            entity.HasIndex(e => e.SubjectId, "IX_SubjectEmployee_SubjectId");
+
             entity.HasOne(d => d.PossibleEmployee).WithMany(p => p.SubjectEmployees)
                 .HasForeignKey(d => d.PossibleEmployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -256,6 +303,10 @@ public partial class DataBaseContext : DbContext
             entity.HasKey(e => e.Id).HasName("SubjectSpecialty_pkey");
 
             entity.ToTable("SubjectSpecialty");
+
+            entity.HasIndex(e => e.SpecialityId, "IX_SubjectSpecialty_SpecialityId");
+
+            entity.HasIndex(e => e.SubjectId, "IX_SubjectSpecialty_SubjectId");
 
             entity.HasOne(d => d.Speciality).WithMany(p => p.SubjectSpecialties)
                 .HasForeignKey(d => d.SpecialityId)
