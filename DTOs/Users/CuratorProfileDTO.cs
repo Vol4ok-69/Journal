@@ -11,5 +11,5 @@ public class CuratorProfileDTO
     public string? Phone { get; set; }
     public string Post { get; set; } = null!;
     public decimal Salary { get; set; }
-    public string GroupCode { get; set; } = null!; // Код группы, которую курирует
+    public string GroupCode { get; set; } = null!;
 }

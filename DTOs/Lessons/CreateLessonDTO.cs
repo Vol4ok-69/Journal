@@ -6,7 +6,7 @@ public class CreateLessonDTO
     public int TeacherId { get; set; }
     public DateTime Date { get; set; }
     public int GroupId { get; set; }
-    public int Number { get; set; } // Номер пары в день (1, 2, 3, ...)
+    public int Number { get; set; }
     public int LessonTypeId { get; set; }
-    public string? Topic { get; set; } // Тема урока (может быть в модели Lesson)
+    public string? Topic { get; set; }
 }

@@ -9,10 +9,8 @@ public class RegisterRequestDTO
     public string Login { get; set; } = null!;
     public string Password { get; set; } = null!;
     public string? Phone { get; set; }
-    public string? Role { get; set; } // e.g., "Student", "Teacher", "Curator", "Admin". Уточните, как роль передается при регистрации.
-    // Для Student:
-    public int? GroupId { get; set; } // Обязательно для студентов
-    // Для Teacher/Curator/Admin:
-    public int? PostId { get; set; } // Обязательно для сотрудников
-    public decimal? Salary { get; set; } // Для сотрудников
+    public string? Role { get; set; }
+    public int? GroupId { get; set; }
+    public int? PostId { get; set; }
+    public decimal? Salary { get; set; }
 }

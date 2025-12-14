@@ -1,7 +1,8 @@
 namespace JournalApi.DTOs.Common;
 
-public class LessonTypeDTO
+public class SpecialityDTO
 {
     public int Id { get; set; }
-    public string Value { get; set; } = null!; // e.g., "Лекция", "Практика", "Лабораторная работа"
+    public string Value { get; set; } = null!;
+    public string? Description { get; set; }
 }
