@@ -33,6 +33,8 @@ public partial class DataBaseContext : DbContext
 
     public virtual DbSet<Log> Logs { get; set; }
 
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+
     public virtual DbSet<Speciality> Specialities { get; set; }
 
     public virtual DbSet<Student> Students { get; set; }
@@ -172,6 +174,11 @@ public partial class DataBaseContext : DbContext
             entity.HasKey(e => e.Id).HasName("LessonTypes_pkey");
 
             entity.Property(e => e.Value).HasMaxLength(30);
+        });
+
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.Property(e => e.Token).HasMaxLength(256);
         });
 
         modelBuilder.Entity<Speciality>(entity =>

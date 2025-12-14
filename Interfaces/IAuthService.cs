@@ -8,5 +8,6 @@ public interface IAuthService
     Task<TokenResponseDTO?> LoginAsync(LoginRequestDTO request);
     Task<TokenResponseDTO?> RefreshTokenAsync(RefreshTokenRequestDTO request);
     Task<bool> RegisterAsync(RegisterRequestDTO request);
-    Task LogoutAsync();
+    Task<bool> LogoutAsync(string refreshToken);
+    Task LogEventAsync(string message, string type = "Info");
 }
