@@ -1,0 +1,564 @@
+➜  JournalApi git:(back) ✗ tree -a
+.
+├── appsettings.Development.json
+├── appsettings.json
+├── bin
+│   └── Debug
+│       └── net9.0
+│           ├── appsettings.Development.json
+│           ├── appsettings.json
+│           ├── BouncyCastle.Cryptography.dll
+│           ├── cs
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── de
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── EPPlus.dll
+│           ├── EPPlus.Interfaces.dll
+│           ├── es
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── FluentValidation.AspNetCore.dll
+│           ├── FluentValidation.DependencyInjectionExtensions.dll
+│           ├── FluentValidation.dll
+│           ├── fr
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── Humanizer.dll
+│           ├── it
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── iTextSharp.LGPLv2.Core.dll
+│           ├── ja
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── JournalApi
+│           ├── JournalApi.deps.json
+│           ├── JournalApi.dll
+│           ├── JournalApi.pdb
+│           ├── JournalApi.runtimeconfig.json
+│           ├── JournalApi.staticwebassets.endpoints.json
+│           ├── ko
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── Microsoft.AspNetCore.Authentication.JwtBearer.dll
+│           ├── Microsoft.AspNetCore.OpenApi.dll
+│           ├── Microsoft.Bcl.AsyncInterfaces.dll
+│           ├── Microsoft.Bcl.TimeProvider.dll
+│           ├── Microsoft.CodeAnalysis.CSharp.dll
+│           ├── Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+│           ├── Microsoft.CodeAnalysis.dll
+│           ├── Microsoft.CodeAnalysis.Workspaces.dll
+│           ├── Microsoft.EntityFrameworkCore.Abstractions.dll
+│           ├── Microsoft.EntityFrameworkCore.Design.dll
+│           ├── Microsoft.EntityFrameworkCore.dll
+│           ├── Microsoft.EntityFrameworkCore.Relational.dll
+│           ├── Microsoft.Extensions.Configuration.Abstractions.dll
+│           ├── Microsoft.Extensions.Configuration.dll
+│           ├── Microsoft.Extensions.Configuration.FileExtensions.dll
+│           ├── Microsoft.Extensions.Configuration.Json.dll
+│           ├── Microsoft.Extensions.DependencyModel.dll
+│           ├── Microsoft.Extensions.FileProviders.Abstractions.dll
+│           ├── Microsoft.Extensions.FileProviders.Physical.dll
+│           ├── Microsoft.Extensions.FileSystemGlobbing.dll
+│           ├── Microsoft.Extensions.Primitives.dll
+│           ├── Microsoft.IdentityModel.Abstractions.dll
+│           ├── Microsoft.IdentityModel.JsonWebTokens.dll
+│           ├── Microsoft.IdentityModel.Logging.dll
+│           ├── Microsoft.IdentityModel.Protocols.dll
+│           ├── Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+│           ├── Microsoft.IdentityModel.Tokens.dll
+│           ├── Microsoft.IO.RecyclableMemoryStream.dll
+│           ├── Microsoft.OpenApi.dll
+│           ├── Mono.TextTemplating.dll
+│           ├── Npgsql.dll
+│           ├── Npgsql.EntityFrameworkCore.PostgreSQL.dll
+│           ├── pl
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── pt-BR
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── ru
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── runtimes
+│           │   ├── browser
+│           │   │   └── lib
+│           │   │       └── net8.0
+│           │   ├── osx
+│           │   │   └── native
+│           │   │       └── libSkiaSharp.dylib
+│           │   ├── win
+│           │   │   └── lib
+│           │   │       └── net9.0
+│           │   │           └── System.Security.Cryptography.Pkcs.dll
+│           │   ├── win-arm64
+│           │   │   └── native
+│           │   │       └── libSkiaSharp.dll
+│           │   ├── win-x64
+│           │   │   └── native
+│           │   │       └── libSkiaSharp.dll
+│           │   └── win-x86
+│           │       └── native
+│           │           └── libSkiaSharp.dll
+│           ├── Serilog.AspNetCore.dll
+│           ├── Serilog.dll
+│           ├── Serilog.Extensions.Hosting.dll
+│           ├── Serilog.Extensions.Logging.dll
+│           ├── Serilog.Formatting.Compact.dll
+│           ├── Serilog.Settings.Configuration.dll
+│           ├── Serilog.Sinks.Console.dll
+│           ├── Serilog.Sinks.Debug.dll
+│           ├── Serilog.Sinks.File.dll
+│           ├── SkiaSharp.dll
+│           ├── Swashbuckle.AspNetCore.Swagger.dll
+│           ├── Swashbuckle.AspNetCore.SwaggerGen.dll
+│           ├── Swashbuckle.AspNetCore.SwaggerUI.dll
+│           ├── System.CodeDom.dll
+│           ├── System.Composition.AttributedModel.dll
+│           ├── System.Composition.Convention.dll
+│           ├── System.Composition.Hosting.dll
+│           ├── System.Composition.Runtime.dll
+│           ├── System.Composition.TypedParts.dll
+│           ├── System.IdentityModel.Tokens.Jwt.dll
+│           ├── System.Security.Cryptography.Pkcs.dll
+│           ├── System.Security.Cryptography.Xml.dll
+│           ├── tr
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           ├── zh-Hans
+│           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │   ├── Microsoft.CodeAnalysis.resources.dll
+│           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           └── zh-Hant
+│               ├── Microsoft.CodeAnalysis.CSharp.resources.dll
+│               ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│               ├── Microsoft.CodeAnalysis.resources.dll
+│               └── Microsoft.CodeAnalysis.Workspaces.resources.dll
+├── .config
+│   └── dotnet-tools.json
+├── Controllers
+│   ├── AdminController.cs
+│   ├── AuthController.cs
+│   ├── CommonController.cs
+│   ├── CuratorController.cs
+│   ├── ReportsController.cs
+│   ├── StudentController.cs
+│   └── TeacherController.cs
+├── db.txt
+├── docker-compose.yml
+├── .dockerignore
+├── DTOs
+│   ├── Attendance
+│   │   ├── AttendanceDTO.cs
+│   │   └── MarkAttendanceDTO.cs
+│   ├── Auth
+│   │   ├── LoginRequestDTO.cs
+│   │   ├── RefreshToketRequestDTO.cs
+│   │   ├── RegisterRequestDTO.cs
+│   │   └── TokenResponseDTO.cs
+│   ├── Grades
+│   │   ├── CreateGradeDTO.cs
+│   │   ├── GradeDTO.cs
+│   │   └── MonthlyGradeDTO.cs
+│   ├── Lessons
+│   │   ├── CreateLessonDTO.cs
+│   │   ├── LessonDTO.cs
+│   │   └── UpdateLessonDTO.cs
+│   ├── Reports
+│   │   ├── ExportReportDTO.cs
+│   │   ├── MonthlyReportDTO.cs
+│   │   └── SessionReportDTO.cs
+│   └── Users
+│       ├── AdminProfileDTO.cs
+│       ├── CuratorProfileDTO.cs
+│       ├── StudentProfileDTO.cs
+│       └── TeacherProfileDTO.cs
+├── .git
+│   ├── COMMIT_EDITMSG
+│   ├── config
+│   ├── description
+│   ├── FETCH_HEAD
+│   ├── HEAD
+│   ├── hooks
+│   │   ├── applypatch-msg.sample
+│   │   ├── commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-merge-commit.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── pre-push.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── pre-receive.sample
+│   │   ├── push-to-checkout.sample
+│   │   ├── sendemail-validate.sample
+│   │   └── update.sample
+│   ├── index
+│   ├── info
+│   │   └── exclude
+│   ├── logs
+│   │   ├── HEAD
+│   │   └── refs
+│   │       ├── heads
+│   │       │   └── back
+│   │       └── remotes
+│   │           └── origin
+│   │               ├── back
+│   │               ├── desktop
+│   │               ├── front
+│   │               ├── HEAD
+│   │               ├── main
+│   │               └── web
+│   ├── objects
+│   │   ├── 00
+│   │   │   └── f154e1001af9cdf9c4358b63f02f478ade9e40
+│   │   ├── 04
+│   │   │   ├── 81bf22b5d169343c39c3b768ece264b01d962b
+│   │   │   └── dd6edbb4c86a64321d910732418b952ee88c01
+│   │   ├── 08
+│   │   │   └── edc0433fc1e94f5ea935ec18b224e0202cd0db
+│   │   ├── 09
+│   │   │   └── 9899b275c2331b04af5e82a6ea97334dadaa28
+│   │   ├── 0c
+│   │   │   └── 208ae9181e5e5717e47ec1bd59368aebc6066e
+│   │   ├── 0e
+│   │   │   └── 2a5ac830ff2e6f3f64daee35cff97c8cd2f041
+│   │   ├── 0f
+│   │   │   └── 5fe960aadad491dd1fe9ea5fa0a9592ffd6621
+│   │   ├── 10
+│   │   │   └── f68b8c8b4f796baf8ddeee7551b6a52b9437cc
+│   │   ├── 11
+│   │   │   └── 21f1d138d293e1a1b19018faeb9cff7f041558
+│   │   ├── 13
+│   │   │   └── 9d97c626dc22c1c6de51c16c20f69e684efaf5
+│   │   ├── 14
+│   │   │   └── 15fdf556d409c8cd403e2a15a52f1e9da667ee
+│   │   ├── 18
+│   │   │   ├── 34f8e4dd5da150e9928b349b29ca7f44d77c4b
+│   │   │   ├── 5b5db655d392c419d7e74a0d436cdba740d293
+│   │   │   ├── 9d74e5b05ed55e2ace44d055bcdb46ec55f15c
+│   │   │   └── d7dd429c09925820180e4fc3fc8bd857cb9ec6
+│   │   ├── 1a
+│   │   │   └── e735bda14bdcaaaec23a71f83cb2da28100d9f
+│   │   ├── 1b
+│   │   │   ├── a6302f15280dd2bb96a98715e009ffb6d1954a
+│   │   │   └── effe8bc16f5134cdd4a08e7819044ce5830003
+│   │   ├── 1d
+│   │   │   ├── 5f2d923b82b3086c809363b7a6d24f54f24cdd
+│   │   │   ├── 6816b4f9bcb634ffdb455b458959a2a67e85f6
+│   │   │   └── c4dd096c140958f0887cb6562a65d53db75dcc
+│   │   ├── 20
+│   │   │   └── 7d8b53e4cffc749ab8b8877b0c4d0a5eb5b306
+│   │   ├── 21
+│   │   │   └── 15458266c99ffc5390cda6870b10976fbdd3fd
+│   │   ├── 24
+│   │   │   ├── 26fe1762573c24a1d04bd63312f416baf0165b
+│   │   │   ├── 371d523ea0a198d840d6ca00c4a073889432b1
+│   │   │   └── 3aa1aca0af2a930b9a4273aea3db51a3da5e65
+│   │   ├── 28
+│   │   │   └── 2d9ce4606812b2d037ddd6c4abb3c908a77ccb
+│   │   ├── 30
+│   │   │   └── 38b57fb8f54641abb25736ec8508e51bcd743b
+│   │   ├── 32
+│   │   │   ├── 2c1fd415aae974a5ffcde7410ce898eda847a5
+│   │   │   └── a9acc9995576e77ac29dd8c0b3ac91fcd01ac9
+│   │   ├── 33
+│   │   │   └── e965ec6f2a9fd0b920c49aac267a37b3719073
+│   │   ├── 34
+│   │   │   └── e7d82f84b834b6f0a1f638dedc5547cf9b8a79
+│   │   ├── 37
+│   │   │   ├── 58dd5c63377ce6d0384a0ee9b4b4c83eb65107
+│   │   │   └── 856b39288506291152de243197e7f9aa00e59c
+│   │   ├── 38
+│   │   │   └── f40545f4d1e147e5226d6e48ef87864f8bb8ae
+│   │   ├── 39
+│   │   │   └── 21c8eadab4343eafd9a3be7990fc564bf5c4e6
+│   │   ├── 3c
+│   │   │   └── 3c14538c44834f1aad01a8d4ca008205859858
+│   │   ├── 3e
+│   │   │   └── 4a3cba5e13988666261dfacebbbf00594f630d
+│   │   ├── 3f
+│   │   │   └── 1abd4ff7c09946a63acdec378d792bdbb9b57f
+│   │   ├── 42
+│   │   │   └── c27336428ea062ede8e05ae1cbf2ab79188fc2
+│   │   ├── 43
+│   │   │   └── a368ab35c8f89b66f3ae912371cdabfee9de67
+│   │   ├── 44
+│   │   │   └── 2c8834dc344bc4d82eaa27a70c78e00f8f5dd1
+│   │   ├── 45
+│   │   │   └── f4be872b8384cabe4bcba111c7c0b028dd2e77
+│   │   ├── 47
+│   │   │   └── c5960bbec57c685520f97dc473d897248ff4da
+│   │   ├── 48
+│   │   │   └── d26fa82d6e82a4192f68e4b6852cf1acd67384
+│   │   ├── 55
+│   │   │   └── 531709b9c8377c4d53e99a9ef7d675ed740dd6
+│   │   ├── 60
+│   │   │   └── 709fa98c8ff7715a37358ecfe9420a843abfb4
+│   │   ├── 64
+│   │   │   ├── 6d859983852b44bd77b9935e904c1060f59823
+│   │   │   └── c8ee8b62f60798e9510f91715dd836da921104
+│   │   ├── 66
+│   │   │   ├── 68c115b6eae902db3de11ff01b688967df7780
+│   │   │   └── 9177de1f2d930b6200bb894e4bbcfae9e167d1
+│   │   ├── 6b
+│   │   │   └── b9282af2c9a44e03f63a1d2e5b439f25acce84
+│   │   ├── 70
+│   │   │   └── 8b5745bb83e4ed835220503d1bc492b960ee8b
+│   │   ├── 72
+│   │   │   └── 679022f55214015c8a9143350944b9ccb25622
+│   │   ├── 73
+│   │   │   └── e12bdcf37c3600f2df8d7a8eb5f3d571e08990
+│   │   ├── 75
+│   │   │   ├── 42fbc407d7b954840c9b52e93f4c442fa7102c
+│   │   │   └── 8d949bbb3d29375a5d7f4d8527f8b91c1713d2
+│   │   ├── 76
+│   │   │   ├── 3180e79945075be8e44bb90ec9e2a86d61b1fc
+│   │   │   ├── b738750f62b97e041784ab40dd167467ab74cf
+│   │   │   └── e58f4b7e677590a7729f834c6f8040c3de0c89
+│   │   ├── 77
+│   │   │   └── b6a9bd290c5d8b862ab56136208d6e1ad700a1
+│   │   ├── 7b
+│   │   │   └── 4b8513b3d41f54e51c78205d9b7b5f54c39023
+│   │   ├── 7e
+│   │   │   ├── 0dd2b826bcdb74a165679eb44aeb0d574b4344
+│   │   │   ├── 20a12b869522767e5cce338bdcbf15414f4db6
+│   │   │   └── 8e50fcf3f2d0477f8fdb2d9fa018929820913e
+│   │   ├── 83
+│   │   │   ├── 9cdaf614ab27a96807e8ac04e3e435cf9a1544
+│   │   │   └── a0d397889f9ccb065f5b5263218137e8545ebb
+│   │   ├── 85
+│   │   │   └── 9839eb4b29c07ac510344c4fc07d63327da7fa
+│   │   ├── 86
+│   │   │   ├── b6ce6cd9a2b31bdbcf228d20ed8f2f3cdb9fc9
+│   │   │   └── dd13221d5fcf6eaff8139fcb4cab9478d2fa8d
+│   │   ├── 8a
+│   │   │   └── 6ddd20b14708deeb2f8ed701a2829648fe3c8d
+│   │   ├── 8b
+│   │   │   └── 9469e90958505e71ce3fb2b9ac49d55d706888
+│   │   ├── 8c
+│   │   │   └── d2cd8569c8ec849638fc0f9c4a3daeed821d26
+│   │   ├── 90
+│   │   │   └── 314778bebb92ab926f6ccfbd24da8b998a804e
+│   │   ├── 94
+│   │   │   ├── 59a743fdefd986c989b588a3ec4bf783fad115
+│   │   │   ├── 8cbda83e6b8a4aacecb709efb43465cac68624
+│   │   │   └── b65dff90ea911de1823984db9b48976b61afa2
+│   │   ├── 97
+│   │   │   └── 1cc1a6dbe954a5449efbc77e86887f522b567d
+│   │   ├── 9b
+│   │   │   ├── 215716f864ef85dbcdf58e0353ef64971b7368
+│   │   │   ├── 3ac485f50c2625b874441b81fe0b80c9a6acee
+│   │   │   └── 976a659e4d102e4327e7150279a238a6d6f52f
+│   │   ├── 9d
+│   │   │   └── d7175e92be5fc69a304d447d98418fb7fb4406
+│   │   ├── 9f
+│   │   │   ├── ab42f78cb2504ed9334471c55513be0851918e
+│   │   │   └── cd21b47431ceed944ea5ec4d5a71fb40212c34
+│   │   ├── a2
+│   │   │   └── 46a467a0f7786e721b9df350eb9343e0c1abb3
+│   │   ├── a9
+│   │   │   └── a3570d957268878df080e7067a194e7916ffaa
+│   │   ├── aa
+│   │   │   └── d3c91e8b7d41185e6a5667279ba150fb206900
+│   │   ├── ab
+│   │   │   └── b2addb2d2647ce60bea810742a3a613a79b76d
+│   │   ├── ae
+│   │   │   └── 6439fa82c494181d18e9b4907a8459dcf31072
+│   │   ├── b7
+│   │   │   ├── 4db6c0603281d0317f83ec246352636434f982
+│   │   │   └── 98b7e3c49791c65572a339ec45f53e8b78396f
+│   │   ├── ba
+│   │   │   └── 973ea024830939f5aa9d099752bd50afd8354e
+│   │   ├── bc
+│   │   │   └── ae319e5994acf6870af67f4bcf6b34d3acb677
+│   │   ├── be
+│   │   │   └── 902cbfc0a2c48948643cb7450e072647cac7cd
+│   │   ├── bf
+│   │   │   ├── 154c06361f7a75ae74a61be157eebde76af4d5
+│   │   │   └── 70caf20e2f7d2fbd85e541a47f63b233b992d0
+│   │   ├── c0
+│   │   │   ├── 4a9cfe0cc7ac3895d57d727820001629cbc058
+│   │   │   └── ebff8169eec9c61b3b853828492bf03dbe8375
+│   │   ├── c5
+│   │   │   ├── 396084340d65dda823c09a3dfcf66e5857312d
+│   │   │   └── ad35727400fa9b22da0697658e889d7fca169b
+│   │   ├── c8
+│   │   │   └── 4b6cd1e58d77f25dce7db6d277cc54b7a32584
+│   │   ├── c9
+│   │   │   ├── 6fa2b0d7756eff26513edb32432c676490fd45
+│   │   │   └── deb1bac4a41905eaf705352ee1692dd1e05142
+│   │   ├── cd
+│   │   │   └── 2158891e79239896b53310ac0e7aa5021affb6
+│   │   ├── d1
+│   │   │   ├── 9e8f8ebbbfe281e1e6493098b806b7593d9908
+│   │   │   └── ad305ab8dbc048b0bb7a4c73cf7fa9898051c1
+│   │   ├── d5
+│   │   │   └── f8ea6c51d7f4fa45d429dd38d656c890aff183
+│   │   ├── d8
+│   │   │   └── 5379666248f1227d20ea8e053f3b599cd0f9e2
+│   │   ├── dc
+│   │   │   └── 37a28ae0548b05393cb22417e3d7bab5581575
+│   │   ├── df
+│   │   │   └── 42668c74ea080df5a83443d3cf60ec51cbda0d
+│   │   ├── e0
+│   │   │   ├── bdbfdb0bb1337a27cc62f37dc80e21a0b7f85f
+│   │   │   └── cbc5d255e951f5ead4b1669de8c29626e5122b
+│   │   ├── e4
+│   │   │   ├── 5d149d924ab11c6bdcfa5fa2ccf6ee92fee528
+│   │   │   └── b2d8efe371a5285013a70a2fe9d9c998493b05
+│   │   ├── e6
+│   │   │   └── 9de29bb2d1d6434b8b29ae775ad8c2e48c5391
+│   │   ├── eb
+│   │   │   └── 95ef592e247aee6a1f1a21194792702c4c5d77
+│   │   ├── ec
+│   │   │   └── 0b0ea7de02336a3595962c009e9ef3664bffb7
+│   │   ├── ee
+│   │   │   └── 23cf7f11c9362e98db29ca90634348d709fb18
+│   │   ├── ef
+│   │   │   └── 194f2fde71a77db0594ca26d9012c430ed1b98
+│   │   ├── f1
+│   │   │   ├── 377282ab303fb9b1c294fd41167577737aea6e
+│   │   │   └── 7406b6cc9f56a5f89d7746cc31c85c607a05b5
+│   │   ├── f5
+│   │   │   └── 84d3f3d8ea5c2a876c25753009c60e6c91b5ec
+│   │   ├── f7
+│   │   │   └── ed45cced4e4a02387e0dbf448e0ae2a9eaaf9b
+│   │   ├── f8
+│   │   │   ├── 2a9da885dcf864deca70ad11078656a9a4f0d5
+│   │   │   └── ef08f59bb7b388a8180b20b231074eb1654161
+│   │   ├── fd
+│   │   │   └── c542408a69478496ffa5fdefec1bd3cd69a913
+│   │   ├── info
+│   │   └── pack
+│   ├── ORIG_HEAD
+│   └── refs
+│       ├── heads
+│       │   └── back
+│       ├── remotes
+│       │   └── origin
+│       │       ├── back
+│       │       ├── desktop
+│       │       ├── front
+│       │       ├── HEAD
+│       │       ├── main
+│       │       └── web
+│       └── tags
+├── .gitignore
+├── Helpers
+│   ├── ExcelExporter.cs
+│   ├── JwtHelper.cs
+│   └── PdfGenerator.cs
+├── init.sql
+├── Interfaces
+│   └── IAuthService.cs
+├── JournalApi.csproj
+├── JournalApi.http
+├── JournalApi.sln
+├── Middleware
+│   ├── ExceptionHandlingMiddleware.cs
+│   ├── JwtMiddleware.cs
+│   └── RoleAuthorizationMiddleware.cs
+├── Migrations
+│   ├── 20251209111509_InitialCreate.cs
+│   ├── 20251209111509_InitialCreate.Designer.cs
+│   ├── 20251211122843_Logs.cs
+│   ├── 20251211122843_Logs.Designer.cs
+│   └── DataBaseContextModelSnapshot.cs
+├── Models
+│   ├── DataBaseContext.cs
+│   ├── EducationType.cs
+│   ├── Employee.cs
+│   ├── EmployeePost.cs
+│   ├── Grade.cs
+│   ├── Group.cs
+│   ├── Lesson.cs
+│   ├── LessonType.cs
+│   ├── Log.cs
+│   ├── Speciality.cs
+│   ├── Student.cs
+│   ├── StudentGrade.cs
+│   ├── StudyDuration.cs
+│   ├── StudyDurationSpeciality.cs
+│   ├── Subject.cs
+│   ├── SubjectEmployee.cs
+│   └── SubjectSpecialty.cs
+├── obj
+│   ├── Debug
+│   │   └── net9.0
+│   │       ├── apphost
+│   │       ├── JournalApi.AssemblyInfo.cs
+│   │       ├── JournalApi.AssemblyInfoInputs.cache
+│   │       ├── JournalApi.assets.cache
+│   │       ├── JournalApi.csproj.AssemblyReference.cache
+│   │       ├── JournalApi.csproj.CoreCompileInputs.cache
+│   │       ├── JournalApi.csproj.FileListAbsolute.txt
+│   │       ├── JournalApi.csproj.Up2Date
+│   │       ├── JournalApi.dll
+│   │       ├── JournalApi.GeneratedMSBuildEditorConfig.editorconfig
+│   │       ├── JournalApi.genruntimeconfig.cache
+│   │       ├── JournalApi.GlobalUsings.g.cs
+│   │       ├── JournalApi.MvcApplicationPartsAssemblyInfo.cache
+│   │       ├── JournalApi.MvcApplicationPartsAssemblyInfo.cs
+│   │       ├── JournalApi.pdb
+│   │       ├── JournalApi.sourcelink.json
+│   │       ├── .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+│   │       ├── ref
+│   │       │   └── JournalApi.dll
+│   │       ├── refint
+│   │       │   └── JournalApi.dll
+│   │       ├── staticwebassets
+│   │       │   ├── msbuild.build.JournalApi.props
+│   │       │   ├── msbuild.buildMultiTargeting.JournalApi.props
+│   │       │   └── msbuild.buildTransitive.JournalApi.props
+│   │       ├── staticwebassets.build.endpoints.json
+│   │       └── staticwebassets.build.json
+│   ├── JournalApi.csproj.EntityFrameworkCore.targets
+│   ├── JournalApi.csproj.nuget.dgspec.json
+│   ├── JournalApi.csproj.nuget.g.props
+│   ├── JournalApi.csproj.nuget.g.targets
+│   ├── project.assets.json
+│   └── project.nuget.cache
+├── Program.cs
+├── Properties
+│   └── launchSettings.json
+├── Services
+│   ├── AttendanceService.cs
+│   ├── AuthService.cs
+│   ├── GradeService.cs
+│   ├── LessonService.cs
+│   ├── ReportService.cs
+│   └── UserService.cs
+├── start-dev.ps1
+└── start-dev.sh
+
+162 directories, 397 files
+➜  JournalApi git:(back) ✗ 
+
