@@ -1,4 +1,3 @@
-// Controllers/AuthController.cs
 using JournalApi.DTOs.Auth;
 using JournalApi.Interfaces;
 using Microsoft.AspNetCore.Authorization;

@@ -1,5 +1,6 @@
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using JournalApi.DTOs.Grades;
 
 namespace JournalApi.Helpers;
 
@@ -12,9 +13,9 @@ public static class PdfGenerator
         var writer = PdfWriter.GetInstance(document, output);
         document.Open();
 
-        var titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
-        var subtitleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
-        var cellFont = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+        var titleFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 16);
+        var subtitleFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12);
+        var cellFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10);
 
         document.Add(new Paragraph($"Отчёт по группе: {groupName}", titleFont));
         document.Add(new Paragraph($"Месяц: {month:MMMM yyyy}", subtitleFont));
@@ -30,8 +31,10 @@ public static class PdfGenerator
         }
         var sortedSubjects = subjects.OrderBy(s => s).ToList();
 
-        var table = new PdfPTable(2 + sortedSubjects.Count + 2);
-        table.WidthPercentage = 100;
+        var table = new PdfPTable(2 + sortedSubjects.Count + 2)
+        {
+            WidthPercentage = 100
+        };
 
         var headerCell = new PdfPCell(new Phrase("ФИО Студента", subtitleFont)) { HorizontalAlignment = Element.ALIGN_CENTER };
         table.AddCell(headerCell);
@@ -91,9 +94,9 @@ public static class PdfGenerator
         var writer = PdfWriter.GetInstance(document, output);
         document.Open();
 
-        var titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
-        var subtitleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
-        var cellFont = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+        var titleFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 16);
+        var subtitleFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 12);
+        var cellFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 10);
 
         document.Add(new Paragraph($"Отчёт по сессии: {groupName}", titleFont));
         document.Add(new Paragraph($"Семестр: {semesterNumber} ({year}-{year + 1})", subtitleFont));
@@ -134,6 +137,45 @@ public static class PdfGenerator
             }
 
             table.AddCell(new PdfPCell(new Phrase(student.IsAcademicProbation ? "Да" : "Нет", cellFont)));
+        }
+
+        document.Add(table);
+        document.Close();
+
+        return output.ToArray();
+    }
+    public static byte[] GenerateMonthlyGradesReportPdf(int subjectId, DateTime month, List<StudentGradeDTO> studentGrades)
+    {
+        using var output = new MemoryStream();
+        var document = new Document(PageSize.A4);
+        var writer = PdfWriter.GetInstance(document, output);
+        document.Open();
+
+        var titleFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 14);
+        var subtitleFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 14);
+        var cellFont = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 14);
+
+        document.Add(new Paragraph($"Отчёт по оценкам за предмет: {subjectId}", titleFont));
+        document.Add(new Paragraph($"Месяц: {month:MMMM yyyy}", subtitleFont));
+        document.Add(new Paragraph(" "));
+
+        var table = new PdfPTable(3)
+        {
+            WidthPercentage = 100
+        };
+
+        var headerCell = new PdfPCell(new Phrase("ФИО Студента", subtitleFont)) { HorizontalAlignment = Element.ALIGN_CENTER };
+        table.AddCell(headerCell);
+        headerCell = new PdfPCell(new Phrase("Оценки за месяц", subtitleFont)) { HorizontalAlignment = Element.ALIGN_CENTER };
+        table.AddCell(headerCell);
+        headerCell = new PdfPCell(new Phrase("Комментарий", subtitleFont)) { HorizontalAlignment = Element.ALIGN_CENTER };
+        table.AddCell(headerCell);
+
+        foreach (var studentGrade in studentGrades)
+        {
+            table.AddCell(new PdfPCell(new Phrase($"{studentGrade.StudentSurname} {studentGrade.StudentName} {studentGrade.StudentPatronymic}", cellFont)));
+            table.AddCell(new PdfPCell(new Phrase(string.Join(", ", studentGrade.Grades), cellFont)));
+            table.AddCell(new PdfPCell(new Phrase(studentGrade.Description ?? "-", cellFont)));
         }
 
         document.Add(table);

@@ -19,6 +19,8 @@ public partial class Lesson
 
     public int LessonTypeId { get; set; }
 
+    public string? Topic { get; set; }
+
     public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
 
     public virtual Group Group { get; set; } = null!;

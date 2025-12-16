@@ -49,7 +49,7 @@ public class AuthService : IAuthService
                 List<Claim> claims =
                 [
                     new("Id", student.Id.ToString()),
-                    new("Login", student.Login),
+                    new("Login", student.Login ?? ""),
                     new("Surname", student.Surname),
                     new("Name", student.Name),
                     new("Role", "Student")
@@ -62,7 +62,7 @@ public class AuthService : IAuthService
                 {
                     Token = refreshToken,
                     UserId = student.Id,
-                    UserLogin = student.Login,
+                    UserLogin = student.Login ?? "",
                     UserRole = "Student",
                     ExpiresAt = DateTime.UtcNow.AddDays(_refreshTokenDays)
                 };
@@ -164,12 +164,11 @@ public class AuthService : IAuthService
             }
 
             var newAccessToken = JwtHelper.GenerateAccessToken(
-                new List<Claim>
-                {
+                [
                     new("Id", storedToken.UserId.ToString()),
                     new("Login", storedToken.UserLogin),
                     new("Role", storedToken.UserRole)
-                },
+                ],
                 _secretKey, _issuer, _audience, _tokenExpirationHours
             );
 

@@ -108,9 +108,7 @@ public partial class DataBaseContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("Grades_pkey");
 
-            entity.Property(e => e.Grade1)
-                .HasMaxLength(10)
-                .HasColumnName("Grade");
+            entity.Property(e => e.Value).HasMaxLength(10);
         });
 
         modelBuilder.Entity<Group>(entity =>

@@ -1,3 +1,4 @@
+using JournalApi.DTOs.Grades;
 using OfficeOpenXml;
 
 namespace JournalApi.Helpers;
@@ -110,6 +111,34 @@ public static class ExcelExporter
             }
 
             worksheet.Cells[currentRow, 2 + sortedSubjects.Count].Value = student.IsAcademicProbation ? "Да" : "Нет";
+
+            currentRow++;
+        }
+
+        return package.GetAsByteArray();
+    }
+    public static byte[] ExportMonthlyGradesReportToExcel(int subjectId, DateTime month, List<StudentGradeDTO> studentGrades)
+    {
+        using var package = new ExcelPackage();
+        var worksheet = package.Workbook.Worksheets.Add("Monthly Grades Report");
+
+        worksheet.Cells[1, 1].Value = "Subject ID:";
+        worksheet.Cells[1, 2].Value = subjectId;
+        worksheet.Cells[2, 1].Value = "Month:";
+        worksheet.Cells[2, 2].Value = month.ToString("MMMM yyyy");
+
+        var currentRow = 4;
+        worksheet.Cells[currentRow, 1].Value = "ФИО Студента";
+        worksheet.Cells[currentRow, 2].Value = "Оценки за месяц";
+        worksheet.Cells[currentRow, 3].Value = "Комментарий";
+
+        currentRow++;
+
+        foreach (var studentGrade in studentGrades)
+        {
+            worksheet.Cells[currentRow, 1].Value = $"{studentGrade.StudentSurname} {studentGrade.StudentName} {studentGrade.StudentPatronymic}";
+            worksheet.Cells[currentRow, 2].Value = string.Join(", ", studentGrade.Grades);
+            worksheet.Cells[currentRow, 3].Value = studentGrade.Description;
 
             currentRow++;
         }

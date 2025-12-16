@@ -8,4 +8,5 @@ public class UpdateLessonDTO
     public int Number { get; set; }
     public int LessonTypeId { get; set; }
     public string? Topic { get; set; }
+    public int TeacherId { get; set; }
 }

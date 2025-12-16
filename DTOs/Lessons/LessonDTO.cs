@@ -10,4 +10,5 @@ public class LessonDTO
     public int Number { get; set; }
     public string LessonType { get; set; } = null!;
     public string? Topic { get; set; }
+    public int TeacherId { get; set; }
 }
