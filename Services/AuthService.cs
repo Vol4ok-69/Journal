@@ -11,7 +11,7 @@ public class AuthService : IAuthService
     private readonly DataBaseContext _context;
     private readonly IConfiguration _configuration;
     private readonly string _secretKey;
-    private readonly int _tokenExpirationHours;
+    private readonly int _tokenExpirationMinutes;
     private readonly int _refreshTokenDays;
     private readonly string _issuer;
     private readonly string _audience;
@@ -21,13 +21,13 @@ public class AuthService : IAuthService
         _context = context;
         _configuration = configuration;
         _secretKey = _configuration["Jwt:SecretKey"] ?? throw new Exception("JWT SecretKey is not configured");
-        _tokenExpirationHours = int.Parse(_configuration["Jwt:TokenExpirationHours"] ?? "1");
+        _tokenExpirationMinutes = int.Parse(_configuration["Jwt:TokenExpirationMinutes"] ?? "15");
         _refreshTokenDays = int.Parse(_configuration["Jwt:RefreshTokenDays"] ?? "14");
         _issuer = _configuration["Jwt:Issuer"] ?? "JournalApi";
         _audience = _configuration["Jwt:Audience"] ?? "JournalClient";
     }
 
-    public async Task<TokenResponseDTO?> LoginAsync(LoginRequestDTO request)
+    public async Task<TokenResponseDTO> LoginAsync(LoginRequestDTO request)
     {
         try
         {
@@ -42,8 +42,8 @@ public class AuthService : IAuthService
             {
                 if (!BCryptNet.Verify(request.Password, student.Password))
                 {
-                    await LogEventAsync($"Failed login attempt for student: {request.Login}", "Error");
-                    return null;
+                    await LogEventAsync($"Failed login attempt for student: {request.Login}. Password is incorrect.", "Error");
+                    return new TokenResponseDTO { Message = $"Password for student: {request.Login} is incorrect." };
                 }
 
                 List<Claim> claims =
@@ -55,7 +55,7 @@ public class AuthService : IAuthService
                     new("Role", "Student")
                 ];
 
-                var accessToken = JwtHelper.GenerateAccessToken(claims, _secretKey, _issuer, _audience, _tokenExpirationHours);
+                var accessToken = JwtHelper.GenerateAccessToken(claims, _secretKey, _issuer, _audience, _tokenExpirationMinutes);
                 var refreshToken = JwtHelper.GenerateRefreshToken();
 
                 var refreshTokenEntity = new RefreshToken
@@ -78,8 +78,8 @@ public class AuthService : IAuthService
             {
                 if (!BCryptNet.Verify(request.Password, employee.Password))
                 {
-                    await LogEventAsync($"Failed login attempt for employee: {request.Login}", "Error");
-                    return null;
+                    await LogEventAsync($"Failed login attempt for employee: {request.Login}. Password is incorrect.", "Error");
+                    return new TokenResponseDTO { Message = $"Password for employee: {request.Login} is incorrect." };
                 }
 
                 var post = await _context.EmployeePosts.FirstOrDefaultAsync(p => p.Id == employee.PostId);
@@ -106,7 +106,7 @@ public class AuthService : IAuthService
                     new("Role", role)
                 ];
 
-                var accessToken = JwtHelper.GenerateAccessToken(claims, _secretKey, _issuer, _audience, _tokenExpirationHours);
+                var accessToken = JwtHelper.GenerateAccessToken(claims, _secretKey, _issuer, _audience, _tokenExpirationMinutes);
                 var refreshToken = JwtHelper.GenerateRefreshToken();
 
                 var refreshTokenEntity = new RefreshToken
@@ -123,16 +123,16 @@ public class AuthService : IAuthService
 
                 await LogEventAsync($"Successful login for employee: {request.Login} (Role: {role})", "Info");
 
-                return new TokenResponseDTO { AccessToken = accessToken, RefreshToken = refreshToken };
+                return new TokenResponseDTO { AccessToken = accessToken, RefreshToken = refreshToken, Message = $"Successful login for employee: {request.Login} (Role: {role})" };
             }
 
             await LogEventAsync($"Login attempt for non-existent user: {request.Login}", "Warning");
-            return null;
+            return new TokenResponseDTO { Message = $"Login attempt for non-existent user: {request.Login}" };
         }
         catch (Exception ex)
         {
             await LogEventAsync($"Exception during login for {request.Login}: {ex.Message}", "Error");
-            return null;
+            return new TokenResponseDTO { Message = $"Exception during login for {request.Login}: {ex.Message}" };
         }
     }
 
@@ -146,7 +146,7 @@ public class AuthService : IAuthService
             if (storedToken == null)
             {
                 await LogEventAsync($"Refresh token not found in DB: {request.RefreshToken}", "Error");
-                return null;
+                return new TokenResponseDTO { Message = $"Refresh token not found in DB: {request.RefreshToken}" };
             }
 
             if (storedToken.ExpiresAt < DateTime.UtcNow)
@@ -154,13 +154,13 @@ public class AuthService : IAuthService
                 _context.RefreshTokens.Remove(storedToken);
                 await _context.SaveChangesAsync();
                 await LogEventAsync($"Attempt to use expired refresh token for user: {storedToken.UserLogin}", "Error");
-                return null;
+                return new TokenResponseDTO { Message = $"Attempt to use expired refresh token for user: {storedToken.UserLogin}" };
             }
 
             if (storedToken.RevokedAt != null)
             {
                 await LogEventAsync($"Attempt to use revoked refresh token for user: {storedToken.UserLogin}", "Error");
-                return null;
+                return new TokenResponseDTO { Message = $"Attempt to use revoked refresh token for user: {storedToken.UserLogin}" };
             }
 
             var newAccessToken = JwtHelper.GenerateAccessToken(
@@ -169,7 +169,7 @@ public class AuthService : IAuthService
                     new("Login", storedToken.UserLogin),
                     new("Role", storedToken.UserRole)
                 ],
-                _secretKey, _issuer, _audience, _tokenExpirationHours
+                _secretKey, _issuer, _audience, _tokenExpirationMinutes
             );
 
             var newRefreshToken = JwtHelper.GenerateRefreshToken();
@@ -195,11 +195,11 @@ public class AuthService : IAuthService
         catch (Exception ex)
         {
             await LogEventAsync($"Exception during token refresh: {ex.Message}", "Error");
-            return null;
+            return new TokenResponseDTO { Message = $"Exception during token refresh: {ex.Message}" };
         }
     }
 
-    public async Task<bool> RegisterAsync(RegisterRequestDTO request)
+    public async Task<RegisterResponseDTO> RegisterAsync(RegisterRequestDTO request)
     {
         try
         {
@@ -209,7 +209,7 @@ public class AuthService : IAuthService
             if (existingStudent || existingEmployee)
             {
                 await LogEventAsync($"Registration failed: Login '{request.Login}' already exists.", "Warning");
-                return false;
+                return new RegisterResponseDTO { Result = false, Message = $"Registration failed: Login '{request.Login}' already exists." };
             }
 
             if (request.Role == "Student")
@@ -217,7 +217,7 @@ public class AuthService : IAuthService
                 if (!request.GroupId.HasValue)
                 {
                     await LogEventAsync($"Registration failed for student: GroupId is required.", "Error");
-                    return false;
+                    return new RegisterResponseDTO { Result = false, Message = $"Registration failed for student: GroupId is required." };
                 }
 
                 var student = new Student
@@ -235,14 +235,14 @@ public class AuthService : IAuthService
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync();
                 await LogEventAsync($"New student registered: {request.Login}", "Info");
-                return true;
+                return new RegisterResponseDTO { Result = true, Message = $"New student registered: {request.Login}" };
             }
             else if (request.Role == "Teacher" || request.Role == "Curator" || request.Role == "Admin")
             {
                 if (!request.PostId.HasValue)
                 {
                     await LogEventAsync($"Registration failed for employee: PostId is required.", "Error");
-                    return false;
+                    return new RegisterResponseDTO { Result = false, Message = $"Registration failed for employee: PostId is required." };
                 }
 
                 var employee = new Employee
@@ -261,16 +261,16 @@ public class AuthService : IAuthService
                 _context.Employees.Add(employee);
                 await _context.SaveChangesAsync();
                 await LogEventAsync($"New employee registered: {request.Login} (Role: {request.Role})", "Info");
-                return true;
+                return new RegisterResponseDTO { Result = true, Message = $"New employee registered: {request.Login} (Role: {request.Role})" };
             }
 
             await LogEventAsync($"Registration failed: Unknown role '{request.Role}' for user '{request.Login}'.", "Error");
-            return false;
+            return new RegisterResponseDTO { Result = false, Message = $"Registration failed: Unknown role '{request.Role}' for user '{request.Login}'." };
         }
         catch (Exception ex)
         {
             await LogEventAsync($"Exception during registration for {request.Login}: {ex.Message}", "Error");
-            return false;
+            return new RegisterResponseDTO { Result = false, Message = $"Exception during registration for {request.Login}: {ex.Message}" };
         }
     }
 

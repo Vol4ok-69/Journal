@@ -16,17 +16,31 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    private void SetRefreshTokenCookie(string token)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddDays(14)
+        };
+        Response.Cookies.Append("refreshToken", token, cookieOptions);
+    }
+
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestDTO request)
     {
         var result = await _authService.LoginAsync(request);
-        if (result == null)
+
+        if (string.IsNullOrEmpty(result.AccessToken))
         {
-            return Unauthorized(new { message = "Invalid login or password." });
+            return Unauthorized(new { message = result.Message ?? "Invalid login or password." });
         }
 
-        return Ok(result);
+        SetRefreshTokenCookie(result.RefreshToken!);
+        return Ok(new { accessToken = result.AccessToken });
     }
 
     [AllowAnonymous]
@@ -34,9 +48,10 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDTO request)
     {
         var result = await _authService.RefreshTokenAsync(request);
-        if (result == null)
+
+        if (result == null || string.IsNullOrEmpty(result.AccessToken))
         {
-            return Unauthorized(new { message = "Invalid or expired refresh token." });
+            return Unauthorized(new { message = result?.Message ?? "Invalid or expired refresh token." });
         }
 
         return Ok(result);
@@ -46,13 +61,14 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDTO request)
     {
-        var success = await _authService.RegisterAsync(request);
-        if (!success)
+        var result = await _authService.RegisterAsync(request);
+
+        if (!result.Result)
         {
-            return BadRequest(new { message = "Registration failed. Please check your data." });
+            return BadRequest(new { message = result.Message });
         }
 
-        return Ok(new { message = "User registered successfully." });
+        return Ok(new { message = result.Message });
     }
 
     [Authorize]
@@ -60,6 +76,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Logout([FromBody] RefreshTokenRequestDTO request)
     {
         var success = await _authService.LogoutAsync(request.RefreshToken);
+
         if (!success)
         {
             return BadRequest(new { message = "Logout failed. Token may be invalid or already revoked." });

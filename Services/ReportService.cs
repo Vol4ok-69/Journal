@@ -268,49 +268,37 @@ public class ReportService
 
     public async Task<byte[]> ExportMonthlyAttendanceReportToExcelAsync(int groupId, DateTime month)
     {
-        var report = await GetMonthlyAttendanceReportAsync(groupId, month);
-        if (report == null) throw new ArgumentException("Report not found");
-
+        var report = await GetMonthlyAttendanceReportAsync(groupId, month) ?? throw new ArgumentException("Report not found");
         return ExcelExporter.ExportMonthlyReportToExcel(report.Group, report.Month, report.Students);
     }
 
     public async Task<byte[]> ExportMonthlyAttendanceReportToPdfAsync(int groupId, DateTime month)
     {
-        var report = await GetMonthlyAttendanceReportAsync(groupId, month);
-        if (report == null) throw new ArgumentException("Report not found");
-
+        var report = await GetMonthlyAttendanceReportAsync(groupId, month) ?? throw new ArgumentException("Report not found");
         return PdfGenerator.GenerateMonthlyReportPdf(report.Group, report.Month, report.Students);
     }
 
     public async Task<byte[]> ExportMonthlyGradesReportToExcelAsync(int subjectId, DateTime month)
     {
-        var report = await GetMonthlyGradesReportAsync(subjectId, month);
-        if (report == null) throw new ArgumentException("Report not found");
-
+        var report = await GetMonthlyGradesReportAsync(subjectId, month) ?? throw new ArgumentException("Report not found");
         return ExcelExporter.ExportMonthlyGradesReportToExcel(report.SubjectId, report.Month, report.StudentGrades);
     }
 
     public async Task<byte[]> ExportMonthlyGradesReportToPdfAsync(int subjectId, DateTime month)
     {
-        var report = await GetMonthlyGradesReportAsync(subjectId, month);
-        if (report == null) throw new ArgumentException("Report not found");
-
+        var report = await GetMonthlyGradesReportAsync(subjectId, month) ?? throw new ArgumentException("Report not found");
         return PdfGenerator.GenerateMonthlyGradesReportPdf(report.SubjectId, report.Month, report.StudentGrades);
     }
 
     public async Task<byte[]> ExportSessionReportToExcelAsync(int groupId, int semesterNumber, int year)
     {
-        var report = await GetSessionReportAsync(groupId, semesterNumber, year);
-        if (report == null) throw new ArgumentException("Report not found");
-
+        var report = await GetSessionReportAsync(groupId, semesterNumber, year) ?? throw new ArgumentException("Report not found");
         return ExcelExporter.ExportSessionReportToExcel(report.Group, semesterNumber, year, report.Students);
     }
 
     public async Task<byte[]> ExportSessionReportToPdfAsync(int groupId, int semesterNumber, int year)
     {
-        var report = await GetSessionReportAsync(groupId, semesterNumber, year);
-        if (report == null) throw new ArgumentException("Report not found");
-
+        var report = await GetSessionReportAsync(groupId, semesterNumber, year) ?? throw new ArgumentException("Report not found");
         return PdfGenerator.GenerateSessionReportPdf(report.Group, semesterNumber, year, report.Students);
     }
 }

@@ -24,7 +24,7 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var jwtSecretKey = jwtSettings["SecretKey"] ?? throw new Exception("JWT SecretKey is not configured");
-var tokenExpirationHours = int.Parse(jwtSettings["TokenExpirationHours"] ?? "1");
+var tokenExpirationMinutes = int.Parse(jwtSettings["TokenExpirationMinutes"] ?? "15");
 var refreshTokenDays = int.Parse(jwtSettings["RefreshTokenDays"] ?? "14");
 var issuer = jwtSettings["Issuer"] ?? "JournalApi";
 var audience = jwtSettings["Audience"] ?? "JournalClient";
